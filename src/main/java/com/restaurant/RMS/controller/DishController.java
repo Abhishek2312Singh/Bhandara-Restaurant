@@ -2,6 +2,7 @@ package com.restaurant.RMS.controller;
 
 import com.restaurant.RMS.dto.DishInputDto;
 import com.restaurant.RMS.dto.DishOutputDto;
+import com.restaurant.RMS.enums.Category;
 import com.restaurant.RMS.service.DishService;
 import com.restaurant.RMS.service.DishServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,5 +31,9 @@ public class DishController {
     public ResponseEntity<DishOutputDto> addDish(@RequestBody DishInputDto dishInputDto){
         System.out.println("Inside controller");
         return new ResponseEntity<>(dishService.addDish(dishInputDto),HttpStatusCode.valueOf(200));
+    }
+    @GetMapping("/search")
+    public ResponseEntity<List<DishOutputDto>> searchByCategory(@RequestParam Category category){
+        return new ResponseEntity<>(dishService.searchByCategory(category),HttpStatusCode.valueOf(200));
     }
 }

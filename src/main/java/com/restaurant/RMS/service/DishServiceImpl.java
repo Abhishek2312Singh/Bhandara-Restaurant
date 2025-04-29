@@ -3,6 +3,7 @@ package com.restaurant.RMS.service;
 import com.restaurant.RMS.dto.DishInputDto;
 import com.restaurant.RMS.dto.DishOutputDto;
 import com.restaurant.RMS.entity.Dish;
+import com.restaurant.RMS.enums.Category;
 import com.restaurant.RMS.repository.DishRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -60,4 +61,21 @@ public class DishServiceImpl implements DishService {
         dishOutputDto.setPrice(dish.getPrice());
         return dishOutputDto;
     }
+
+    @Override
+    public List<DishOutputDto> searchByCategory(Category category) {
+        List<DishOutputDto> dishOutputDtoList = new ArrayList<>();
+        List<Dish> dishs = dishRepository.findByCategory(category);
+        for(Dish dish : dishs){
+            DishOutputDto dishOutputDto = new DishOutputDto();
+            dishOutputDto.setId(dish.getId());
+            dishOutputDto.setName(dish.getName());
+            dishOutputDto.setPrice(dish.getPrice());
+            dishOutputDto.setCategory(dish.getCategory());
+
+            dishOutputDtoList.add(dishOutputDto);
+        }
+        return dishOutputDtoList;
+    }
+
 }
